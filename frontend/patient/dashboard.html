@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Patient — CareFlow</title>
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body>
+    <header class="topnav">
+      <button type="button" class="sidebar-toggle" id="sidebar-toggle" aria-label="Menu">☰</button>
+      <a class="topnav__brand" href="/patient/dashboard.html">CareFlow · Patient</a>
+      <div class="topnav__actions">
+        <button type="button" class="btn btn--ghost btn--sm" id="btn-theme">Theme</button>
+        <button type="button" class="btn btn--ghost btn--sm" id="btn-logout">Logout</button>
+      </div>
+    </header>
+
+    <div class="dashboard" id="dashboard">
+      <aside class="sidebar">
+        <nav>
+          <a href="#profile" data-section="profile">Profile</a>
+          <a href="#doctors" data-section="doctors">Find doctors</a>
+          <a href="#book" data-section="book">Book appointment</a>
+          <a href="#appointments" data-section="appointments">My appointments</a>
+          <a href="#prescriptions" data-section="prescriptions">Prescriptions</a>
+          <a href="#projects" data-section="projects">Treatment plans</a>
+          <a href="#uploads" data-section="uploads">Health uploads</a>
+          <a href="#security" data-section="security">Security (2FA)</a>
+        </nav>
+      </aside>
+
+      <div class="main-content">
+        <section id="sec-profile" class="card mt-2">
+          <h2>Profile</h2>
+          <form id="form-profile" class="grid grid--2" style="margin-top: 1rem">
+            <div class="form-group">
+              <label for="pf-name">Name</label>
+              <input id="pf-name" name="name" />
+            </div>
+            <div class="form-group">
+              <label for="pf-phone">Phone</label>
+              <input id="pf-phone" name="phone" />
+            </div>
+            <div class="form-group">
+              <label for="pf-dob">Date of birth</label>
+              <input id="pf-dob" name="dob" type="date" />
+            </div>
+            <div class="form-group">
+              <label for="pf-gender">Gender</label>
+              <select id="pf-gender" name="gender">
+                <option value="">—</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1">
+              <button type="submit" class="btn btn--primary">Save profile</button>
+            </div>
+          </form>
+        </section>
+
+        <section id="sec-doctors" class="card mt-2 hidden">
+          <h2>Find doctors</h2>
+          <div class="flex gap-1 flex-wrap mt-1">
+            <input id="doc-q" placeholder="Name or specialty" style="max-width: 200px" />
+            <input id="doc-specialty" placeholder="Filter specialty" style="max-width: 180px" />
+            <select id="doc-day" style="max-width: 140px">
+              <option value="">Any day</option>
+              <option value="0">Sunday</option>
+              <option value="1">Monday</option>
+              <option value="2">Tuesday</option>
+              <option value="3">Wednesday</option>
+              <option value="4">Thursday</option>
+              <option value="5">Friday</option>
+              <option value="6">Saturday</option>
+            </select>
+            <button type="button" class="btn btn--primary btn--sm" id="btn-search-docs">Search</button>
+          </div>
+          <div id="doctor-list" class="mt-2"></div>
+        </section>
+
+        <section id="sec-book" class="card mt-2 hidden">
+          <h2>Book appointment</h2>
+          <p style="color: var(--muted); font-size: 0.9rem">
+            Choose a doctor, slot length, then pick an available time.
+          </p>
+          <div class="form-group">
+            <label for="book-doctor">Doctor</label>
+            <select id="book-doctor"></select>
+          </div>
+          <div class="form-group">
+            <label for="book-duration">Duration</label>
+            <select id="book-duration">
+              <option value="15">15 min</option>
+              <option value="30" selected>30 min</option>
+              <option value="60">60 min</option>
+            </select>
+          </div>
+          <button type="button" class="btn btn--primary btn--sm" id="btn-load-slots">Load slots</button>
+          <div id="slot-list" class="mt-2 flex gap-1 flex-wrap"></div>
+          <div class="form-group mt-2">
+            <label for="book-notes">Notes (optional)</label>
+            <textarea id="book-notes" rows="2"></textarea>
+          </div>
+        </section>
+
+        <section id="sec-appointments" class="card mt-2 hidden">
+          <h2>My appointments</h2>
+          <div id="appt-list" class="table-wrap mt-1"></div>
+        </section>
+
+        <section id="sec-prescriptions" class="card mt-2 hidden">
+          <h2>Prescriptions (mock PDF)</h2>
+          <div id="rx-list" class="mt-1"></div>
+        </section>
+
+        <section id="sec-projects" class="card mt-2 hidden">
+          <h2>Treatment plans</h2>
+          <div id="proj-list" class="mt-1"></div>
+          <div id="proj-detail" class="card mt-2 hidden" style="border-style: dashed"></div>
+        </section>
+
+        <section id="sec-uploads" class="card mt-2 hidden">
+          <h2>Upload health data</h2>
+          <form id="form-upload" class="mt-1">
+            <div class="form-group">
+              <label for="up-label">Label</label>
+              <input id="up-label" name="label" value="Lab report" />
+            </div>
+            <div class="form-group">
+              <label for="up-file">File (PDF or image)</label>
+              <input id="up-file" name="file" type="file" accept=".pdf,image/*" required />
+            </div>
+            <button type="submit" class="btn btn--primary">Upload</button>
+          </form>
+          <div id="upload-list" class="table-wrap mt-2"></div>
+        </section>
+
+        <section id="sec-security" class="card mt-2 hidden">
+          <h2>Security</h2>
+          <p style="color: var(--muted); font-size: 0.9rem">
+            Simulated 2FA: on login, OTP is printed in the <strong>server console</strong>.
+          </p>
+          <label class="flex gap-1" style="align-items: center; margin-top: 0.5rem">
+            <input type="checkbox" id="chk-otp" />
+            Enable OTP on login
+          </label>
+          <button type="button" class="btn btn--primary btn--sm mt-1" id="btn-save-otp">Save</button>
+        </section>
+      </div>
+    </div>
+
+    <script src="/js/theme.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/notify.js"></script>
+    <script src="/patient/patient.js"></script>
+    <script>
+      document.getElementById("btn-theme").addEventListener("click", () => toggleTheme());
+    </script>
+  </body>
+</html>

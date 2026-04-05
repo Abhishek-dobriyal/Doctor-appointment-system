@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Doctor Appointment &amp; Project Management</title>
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body>
+    <header class="topnav">
+      <a class="topnav__brand" href="/">CareFlow</a>
+      <div class="topnav__actions">
+        <button type="button" class="btn btn--ghost btn--sm" id="btn-theme" aria-label="Toggle dark mode">
+          Theme
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1>Doctor Appointment &amp; Project Management</h1>
+        <p>
+          Telehealth MVP: book visits, track treatment plans, and manage care — with secure JWT auth and
+          role-based access.
+        </p>
+      </section>
+
+      <div class="card" style="max-width: 420px; margin: 0 auto 2rem; padding: 0 1.25rem 1.25rem">
+        <div class="auth-tabs" role="tablist">
+          <button type="button" class="is-active" data-tab="login" role="tab">Login</button>
+          <button type="button" data-tab="register" role="tab">Patient signup</button>
+        </div>
+
+        <div id="panel-login" class="auth-panel is-active" role="tabpanel">
+          <form id="form-login" novalidate>
+            <div class="form-group">
+              <label for="login-email">Email</label>
+              <input id="login-email" name="email" type="email" required autocomplete="username" />
+              <div class="form-error hidden" data-error-for="login-email"></div>
+            </div>
+            <div class="form-group">
+              <label for="login-password">Password</label>
+              <input
+                id="login-password"
+                name="password"
+                type="password"
+                required
+                minlength="8"
+                autocomplete="current-password"
+              />
+              <div class="form-error hidden" data-error-for="login-password"></div>
+            </div>
+            <button type="submit" class="btn btn--primary" style="width: 100%">Sign in</button>
+          </form>
+
+          <div id="otp-section" class="hidden mt-2">
+            <p style="color: var(--muted); font-size: 0.9rem">
+              2FA is enabled. Enter the OTP from the <strong>server console</strong> (demo).
+            </p>
+            <form id="form-otp" class="mt-1">
+              <div class="form-group">
+                <label for="otp-code">OTP code</label>
+                <input id="otp-code" name="code" inputmode="numeric" maxlength="8" required />
+              </div>
+              <button type="submit" class="btn btn--primary" style="width: 100%">Verify &amp; continue</button>
+            </form>
+          </div>
+        </div>
+
+        <div id="panel-register" class="auth-panel" role="tabpanel">
+          <p style="color: var(--muted); font-size: 0.85rem; margin-top: 0">
+            New accounts are <strong>patients</strong>. Admins create doctor accounts from the admin panel.
+          </p>
+          <form id="form-register" novalidate>
+            <div class="form-group">
+              <label for="reg-name">Full name</label>
+              <input id="reg-name" name="name" type="text" maxlength="120" />
+            </div>
+            <div class="form-group">
+              <label for="reg-email">Email</label>
+              <input id="reg-email" name="email" type="email" required autocomplete="email" />
+              <div class="form-error hidden" data-error-for="reg-email"></div>
+            </div>
+            <div class="form-group">
+              <label for="reg-password">Password (min 8)</label>
+              <input
+                id="reg-password"
+                name="password"
+                type="password"
+                required
+                minlength="8"
+                autocomplete="new-password"
+              />
+              <div class="form-error hidden" data-error-for="reg-password"></div>
+            </div>
+            <button type="submit" class="btn btn--primary" style="width: 100%">Create patient account</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <script src="/js/theme.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/notify.js"></script>
+    <script src="/js/index.js"></script>
+    <script>
+      document.getElementById("btn-theme").addEventListener("click", () => {
+        if (typeof toggleTheme === "function") toggleTheme();
+      });
+    </script>
+  </body>
+</html>

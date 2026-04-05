@@ -1,0 +1,19 @@
+# Dependencies
+backend/node_modules/
+
+# Secrets & local config (never commit real credentials)
+backend/.env
+
+# Uploaded patient files
+backend/uploads/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/

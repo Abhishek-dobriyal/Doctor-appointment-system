@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin — CareFlow</title>
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body>
+    <header class="topnav">
+      <button type="button" class="sidebar-toggle" id="sidebar-toggle" aria-label="Menu">☰</button>
+      <a class="topnav__brand" href="/admin/dashboard.html">CareFlow · Admin</a>
+      <div class="topnav__actions">
+        <button type="button" class="btn btn--ghost btn--sm" id="btn-theme">Theme</button>
+        <button type="button" class="btn btn--ghost btn--sm" id="btn-logout">Logout</button>
+      </div>
+    </header>
+
+    <div class="dashboard" id="dashboard">
+      <aside class="sidebar">
+        <nav>
+          <a href="#stats" data-section="stats">Dashboard</a>
+          <a href="#users" data-section="users">Users</a>
+          <a href="#uploads" data-section="uploads">Moderation</a>
+          <a href="#reports" data-section="reports">Reports</a>
+        </nav>
+      </aside>
+
+      <div class="main-content">
+        <section id="sec-stats" class="mt-2">
+          <h2 style="margin-top: 0">Overview</h2>
+          <div class="grid grid--2 grid--3">
+            <div class="card stat-card">
+              <div class="stat-label">Total users</div>
+              <div class="stat-value" id="st-users">—</div>
+            </div>
+            <div class="card stat-card">
+              <div class="stat-label">Appointments</div>
+              <div class="stat-value" id="st-appts">—</div>
+            </div>
+            <div class="card stat-card">
+              <div class="stat-label">Active projects</div>
+              <div class="stat-value" id="st-proj">—</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="sec-users" class="card mt-2 hidden">
+          <h2>User management</h2>
+          <div class="flex gap-1 flex-wrap mt-1">
+            <select id="filter-role" style="max-width: 140px">
+              <option value="">All roles</option>
+              <option value="patient">Patients</option>
+              <option value="doctor">Doctors</option>
+              <option value="admin">Admins</option>
+            </select>
+            <button type="button" class="btn btn--primary btn--sm" id="btn-refresh-users">Refresh</button>
+          </div>
+
+          <form id="form-user" class="card mt-2" style="box-shadow: none; border-style: dashed">
+            <h3 style="margin-top: 0; font-size: 1rem">Create user</h3>
+            <div class="grid grid--2">
+              <div class="form-group">
+                <label for="cu-email">Email</label>
+                <input id="cu-email" type="email" required />
+              </div>
+              <div class="form-group">
+                <label for="cu-password">Password</label>
+                <input id="cu-password" type="password" minlength="8" required />
+              </div>
+              <div class="form-group">
+                <label for="cu-role">Role</label>
+                <select id="cu-role">
+                  <option value="patient">Patient</option>
+                  <option value="doctor">Doctor</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="cu-name">Name</label>
+                <input id="cu-name" />
+              </div>
+              <div class="form-group">
+                <label for="cu-spec">Specialization (doctor)</label>
+                <input id="cu-spec" />
+              </div>
+              <div class="form-group">
+                <label for="cu-phone">Phone</label>
+                <input id="cu-phone" />
+              </div>
+            </div>
+            <button type="submit" class="btn btn--primary btn--sm">Create</button>
+          </form>
+
+          <div id="user-table" class="table-wrap mt-2"></div>
+        </section>
+
+        <section id="sec-uploads" class="card mt-2 hidden">
+          <h2>Content moderation</h2>
+          <p style="color: var(--muted); font-size: 0.9rem">Delete patient uploads if needed.</p>
+          <button type="button" class="btn btn--ghost btn--sm" id="btn-refresh-uploads">Refresh</button>
+          <div id="upload-table" class="table-wrap mt-1"></div>
+        </section>
+
+        <section id="sec-reports" class="card mt-2 hidden">
+          <h2>Reports</h2>
+          <p style="color: var(--muted); font-size: 0.9rem">Export a mock CSV of users and appointments.</p>
+          <a class="btn btn--primary" id="link-csv" href="/api/admin/export/csv">Download CSV</a>
+        </section>
+      </div>
+    </div>
+
+    <script src="/js/theme.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/notify.js"></script>
+    <script src="/admin/admin.js"></script>
+    <script>
+      document.getElementById("btn-theme").addEventListener("click", () => toggleTheme());
+    </script>
+  </body>
+</html>

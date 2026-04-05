@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Doctor — CareFlow</title>
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body>
+    <header class="topnav">
+      <button type="button" class="sidebar-toggle" id="sidebar-toggle" aria-label="Menu">☰</button>
+      <a class="topnav__brand" href="/doctor/dashboard.html">CareFlow · Doctor</a>
+      <div class="topnav__actions">
+        <button type="button" class="btn btn--ghost btn--sm" id="btn-theme">Theme</button>
+        <button type="button" class="btn btn--ghost btn--sm" id="btn-logout">Logout</button>
+      </div>
+    </header>
+
+    <div class="dashboard" id="dashboard">
+      <aside class="sidebar">
+        <nav>
+          <a href="#profile" data-section="profile">Profile &amp; schedule</a>
+          <a href="#appointments" data-section="appointments">Appointments</a>
+          <a href="#consult" data-section="consult">Consultation (mock)</a>
+          <a href="#projects" data-section="projects">Projects &amp; tasks</a>
+          <a href="#rx" data-section="rx">Prescriptions</a>
+          <a href="#security" data-section="security">Security (2FA)</a>
+        </nav>
+      </aside>
+
+      <div class="main-content">
+        <section id="sec-profile" class="card mt-2">
+          <h2>Profile &amp; specialization</h2>
+          <form id="form-profile" class="mt-1">
+            <div class="form-group">
+              <label for="pf-name">Name</label>
+              <input id="pf-name" name="name" />
+            </div>
+            <div class="form-group">
+              <label for="pf-spec">Specialization</label>
+              <input id="pf-spec" name="specialization" placeholder="e.g. Cardiology" />
+            </div>
+            <div class="form-group">
+              <label for="pf-bio">Bio</label>
+              <textarea id="pf-bio" name="bio" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Weekly availability (minutes from midnight)</label>
+              <p style="color: var(--muted); font-size: 0.8rem; margin: 0 0 0.5rem">
+                Add blocks per weekday. Example: Monday 9:00–17:00 → day 1, start 540, end 1020.
+              </p>
+              <div id="avail-rows"></div>
+              <button type="button" class="btn btn--ghost btn--sm mt-1" id="btn-add-avail">+ Add block</button>
+            </div>
+            <button type="submit" class="btn btn--primary">Save</button>
+          </form>
+        </section>
+
+        <section id="sec-appointments" class="card mt-2 hidden">
+          <h2>Appointment requests</h2>
+          <div id="appt-list" class="table-wrap mt-1"></div>
+        </section>
+
+        <section id="sec-consult" class="card mt-2 hidden">
+          <h2>Consultation (mock)</h2>
+          <p style="color: var(--muted); font-size: 0.9rem">
+            Select an accepted appointment, then open a mock video/chat panel.
+          </p>
+          <div class="form-group">
+            <label for="consult-appt">Appointment</label>
+            <select id="consult-appt"></select>
+          </div>
+          <div class="consult-mock" id="consult-video">
+            Camera preview (mock) — waiting to start
+          </div>
+          <div class="flex gap-1 flex-wrap">
+            <button type="button" class="btn btn--primary btn--sm" id="btn-start-call">Start session</button>
+            <button type="button" class="btn btn--ghost btn--sm" id="btn-end-call">End</button>
+          </div>
+          <div class="card mt-2" style="box-shadow: none; border-style: dashed">
+            <strong>Chat</strong>
+            <div id="chat-log" style="min-height: 120px; font-size: 0.9rem; color: var(--muted); margin: 0.5rem 0">
+              No messages yet.
+            </div>
+            <div class="flex gap-1">
+              <input id="chat-input" placeholder="Type a message…" style="flex: 1" />
+              <button type="button" class="btn btn--primary btn--sm" id="btn-chat-send">Send</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="sec-projects" class="card mt-2 hidden">
+          <h2>Projects (treatment plans)</h2>
+          <form id="form-new-project" class="card mt-1" style="box-shadow: none">
+            <h3 style="margin-top: 0; font-size: 1rem">New project</h3>
+            <div class="form-group">
+              <label for="np-patient">Patient user ID</label>
+              <input id="np-patient" required placeholder="Mongo ObjectId from admin/users list" />
+            </div>
+            <div class="form-group">
+              <label for="np-title">Title</label>
+              <input id="np-title" required />
+            </div>
+            <div class="form-group">
+              <label for="np-desc">Description</label>
+              <textarea id="np-desc" rows="2"></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary btn--sm">Create project</button>
+          </form>
+          <div id="proj-list" class="mt-2"></div>
+          <div id="proj-detail" class="card mt-2 hidden" style="border-style: dashed"></div>
+        </section>
+
+        <section id="sec-rx" class="card mt-2 hidden">
+          <h2>Issue prescription (mock PDF)</h2>
+          <form id="form-rx" class="mt-1">
+            <div class="form-group">
+              <label for="rx-patient">Patient ID</label>
+              <input id="rx-patient" required />
+            </div>
+            <div class="form-group">
+              <label for="rx-title">Title</label>
+              <input id="rx-title" value="Prescription" />
+            </div>
+            <div class="form-group">
+              <label for="rx-items">Line items (one per line)</label>
+              <textarea id="rx-items" rows="4" placeholder="Amoxicillin 500mg&#10;Rest 48h"></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary">Create</button>
+          </form>
+        </section>
+
+        <section id="sec-security" class="card mt-2 hidden">
+          <h2>Security</h2>
+          <p style="color: var(--muted); font-size: 0.9rem">Simulated 2FA — OTP in server console.</p>
+          <label class="flex gap-1" style="align-items: center">
+            <input type="checkbox" id="chk-otp" />
+            Enable OTP on login
+          </label>
+          <button type="button" class="btn btn--primary btn--sm mt-1" id="btn-save-otp">Save</button>
+        </section>
+      </div>
+    </div>
+
+    <script src="/js/theme.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/notify.js"></script>
+    <script src="/doctor/doctor.js"></script>
+    <script>
+      document.getElementById("btn-theme").addEventListener("click", () => toggleTheme());
+    </script>
+  </body>
+</html>
