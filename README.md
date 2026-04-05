@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Doctor Appointment & Project Management System
 
 Production-structured MVP: **Express + MongoDB (Mongoose)** REST API, **vanilla HTML/CSS/JS** frontend, **JWT + bcrypt** auth, **RBAC** (patient / doctor / admin), appointments, treatment **projects & tasks**, file uploads, mock prescriptions, optional **simulated 2FA**, and **30-minute inactivity** session expiry.
@@ -111,3 +112,6 @@ All protected routes expect: `Authorization: Bearer <JWT>`.
 ## License
 
 Use and modify freely for learning or as a starter for your own product.
+=======
+# Doctor-appointment-system
+>>>>>>> fdc483869471f335c9172c427d4650924e65560c
