@@ -43,13 +43,6 @@ cd backend
 copy .env.example .env
 ```
 
-Edit **`.env`**:
-
-- `MONGODB_URI` — e.g. `mongodb://127.0.0.1:27017/doctor_appointment_app`
-- `JWT_SECRET` — long random string (required for production)
-- `PORT` — default `5000` (serves API + frontend)
-- `FRONTEND_URL` — e.g. `http://127.0.0.1:5000` (used by CORS)
-
 ### 3. Install and run
 
 ```powershell
@@ -58,7 +51,7 @@ npm install
 npm start
 ```
 
-Open **http://127.0.0.1:5000** (or your `PORT`).
+
 
 ### 4. Create the first admin
 
